@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # License: BSD-3 (https://tldrlegal.com/license/bsd-3-clause-license-(revised))
-# Copyright (c) 2016-2021, Cabral, Juan; Luczywo, Nadia
 # Copyright (c) 2022, QuatroPe
 # All rights reserved.
 
@@ -82,7 +81,7 @@ class CLI:
             "This software is under the BSD 3-Clause License.",
             "Copyright (c) 2021, Juan Cabral.",
             "For bug reporting or other instructions please check:"
-            " https://github.com/quatrope/scikit-criteria",
+            " https://github.com/quatrope/qafan",
         ]
     )
 
