@@ -24,11 +24,8 @@ import attr
 
 import typer
 
-# =============================================================================
-# CONSTANTS
-# =============================================================================
+from . import VERSION
 
-VERSION = "0.1"
 
 # =============================================================================
 # FUNCTIONS
@@ -153,7 +150,7 @@ class CLI:
 
 
 def main():
-    """Run the checkheader.py cli interface."""
+    """Run the checkheaders.py cli interface."""
     cli = CLI()
     cli.run()
 

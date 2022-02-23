@@ -83,7 +83,7 @@ def do_setup():
             "console_scripts": [
                 "check-testdir=qafan.checktestdir:main",
                 "check-apidocsdir=qafan.checkapidocsdir:main",
-                "check-header=qafan.checkheader:main",
+                "check-headers=qafan.checkheaders:main",
             ]
         },
     )
