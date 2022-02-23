@@ -30,7 +30,7 @@ from setuptools import setup
 
 PATH = pathlib.Path(os.path.abspath(os.path.dirname(__file__)))
 
-REQUIREMENTS = ["typer"]
+REQUIREMENTS = ["attrs", "typer"]
 
 with open(PATH / "README.md") as fp:
     LONG_DESCRIPTION = fp.read()
