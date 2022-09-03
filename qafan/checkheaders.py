@@ -16,7 +16,7 @@
 # IMPORTS
 # =============================================================================
 
-import inspect
+
 import pathlib
 from typing import List, OrderedDict
 
@@ -24,7 +24,7 @@ import attr
 
 import typer
 
-from . import VERSION
+from . import _base
 
 
 # =============================================================================
@@ -56,35 +56,8 @@ def check_file_header(fpath, header_tpl):
 
 
 @attr.s(frozen=True)
-class CLI:
+class CheckHeaders(_base.CLIBase):
     """Check if python files contain the appropriate header."""
-
-    footnotes = "\n".join(
-        [
-            "This software is under the BSD 3-Clause License.",
-            "Copyright (c) 2021, Juan Cabral.",
-            "For bug reporting or other instructions please check:"
-            " https://github.com/quatrope/qafan",
-        ]
-    )
-
-    run = attr.ib(init=False)
-
-    @run.default
-    def _set_run_default(self):
-        app = typer.Typer()
-        for k in dir(self):
-            if k.startswith("_"):
-                continue
-            v = getattr(self, k)
-            if inspect.ismethod(v):
-                decorator = app.command()
-                decorator(v)
-        return app
-
-    def version(self):
-        """Print checktestdir.py version."""
-        typer.echo(f"{__file__ } v.{VERSION}")
 
     def check(
         self,
@@ -94,9 +67,7 @@ class CLI:
         header_template: pathlib.Path = typer.Option(
             ..., help="Path to the header template."
         ),
-        verbose: bool = typer.Option(
-            default=False, help="Show all the result"
-        ),
+        verbose: bool = typer.Option(default=False, help="Show all the result"),
     ):
         """Check if python files contain the appropriate header."""
 
@@ -127,9 +98,7 @@ class CLI:
             else:
                 all_headers_ok = False
                 fg = typer.colors.RED
-                status = typer.style(
-                    "HEADER DOES NOT MATCH", fg=typer.colors.YELLOW
-                )
+                status = typer.style("HEADER DOES NOT MATCH", fg=typer.colors.YELLOW)
             if verbose or not header_ok:
                 msg = f"{fpath} -> {status}"
                 typer.echo(typer.style(msg, fg=fg))
@@ -151,8 +120,7 @@ class CLI:
 
 def main():
     """Run the checkheaders.py cli interface."""
-    cli = CLI()
-    cli.run()
+    CheckHeaders().run()
 
 
 if __name__ == "__main__":

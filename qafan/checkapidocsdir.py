@@ -14,14 +14,13 @@
 # IMPORTS
 # =============================================================================
 
-import inspect
 import pathlib
 
 import attr
 
 import typer
 
-from . import VERSION
+from . import _base
 
 
 # =============================================================================
@@ -67,50 +66,17 @@ def check_apidoc_structure(apidoc_dir, reference_dir):
 
 
 @attr.s(frozen=True)
-class CLI:
+class CheckAPIDocsDir(_base.CLIBase):
     """Check if the structure of API doc directory is equivalent to those of
     the project.
 
     """
 
-    footnotes = "\n".join(
-        [
-            "This software is under the BSD 3-Clause License.",
-            "Copyright (c) 2021, Juan Cabral.",
-            "For bug reporting or other instructions please check:"
-            " https://github.com/quatrope/qafan",
-        ]
-    )
-
-    run = attr.ib(init=False)
-
-    @run.default
-    def _set_run_default(self):
-        app = typer.Typer()
-        for k in dir(self):
-            if k.startswith("_"):
-                continue
-            v = getattr(self, k)
-            if inspect.ismethod(v):
-                decorator = app.command()
-                decorator(v)
-        return app
-
-    def version(self):
-        """Print checktestdir.py version."""
-        typer.echo(f"{__file__ } v.{VERSION}")
-
     def check(
         self,
-        test_dir: str = typer.Argument(
-            ..., help="Path to the api-doc structure."
-        ),
-        reference_dir: str = typer.Option(
-            ..., help="Path to the reference structure."
-        ),
-        verbose: bool = typer.Option(
-            default=False, help="Show all the result"
-        ),
+        test_dir: str = typer.Argument(..., help="Path to the api-doc structure."),
+        reference_dir: str = typer.Option(..., help="Path to the reference structure."),
+        verbose: bool = typer.Option(default=False, help="Show all the result"),
     ):
         """Check if the structure of test directory is equivalent to those
         of the project.
@@ -155,8 +121,7 @@ class CLI:
 
 def main():
     """Run the checkapidocdir.py cli interface."""
-    cli = CLI()
-    cli.run()
+    CheckAPIDocsDir().run()
 
 
 if __name__ == "__main__":
